@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>RevPilot AI</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- ==================== AUTH ==================== -->
+
+    <div class="auth">
+
+        <h2>RevPilot AI</h2>
+
+        <h3>Business Signup</h3>
+
+
+        <input
+            type="text"
+            id="signupName"
+            placeholder="Business Name"
+        >
+
+
+        <input
+            type="email"
+            id="signupEmail"
+            placeholder="Email"
+        >
+
+
+        <input
+            type="password"
+            id="signupPassword"
+            placeholder="Password"
+        >
+
+
+        <button onclick="signup()">
+            Create Account
+        </button>
+
+
+        <h3>Business Login</h3>
+
+
+        <input
+            type="email"
+            id="loginEmail"
+            placeholder="Email"
+        >
+
+
+        <input
+            type="password"
+            id="loginPassword"
+            placeholder="Password"
+        >
+
+
+        <button onclick="login()">
+            Login
+        </button>
+
+
+        <button onclick="logout()">
+            Logout
+        </button>
+
+
+        <p id="authMessage"></p>
+
+    </div>
+
+
+
+    <!-- ==================== DASHBOARD ==================== -->
+
+    <div class="dashboard">
+
+        <!-- PROFESSIONAL NAVBAR -->
+        <div class="navbar">
+
+            <div class="nav-brand">
+                <span class="brand-icon">🚀</span>
+                <span>RevPilot AI</span>
+            </div>
+
+            <div class="nav-right">
+                <span id="navBusinessName">Business</span>
+                <button onclick="logout()">Logout</button>
+            </div>
+
+        </div>
+
+        <!-- ==================== SIDEBAR NAVIGATION ==================== -->
+
+        <div class="dashboard-nav">
+
+            <div class="nav-item active"
+                onclick="scrollToSection('dashboardTop')">
+                🏠 Dashboard
+            </div>
+
+            <div class="nav-item"
+                onclick="scrollToSection('leadSection')">
+                👥 Leads
+            </div>
+
+            <div class="nav-item"
+                onclick="scrollToSection('followupSection')">
+                ⏰ Follow-ups
+            </div>
+
+            <div class="nav-item"
+                onclick="scrollToSection('revenueSection')">
+                💰 Revenue
+            </div>
+
+            <div class="notification-wrapper">
+
+                <div class="nav-item notification-nav"
+                    onclick="toggleNotifications()">
+
+                    🔔 Notifications
+
+                    <span id="notificationCount" class="notification-count">
+                        0
+                    </span>
+
+                </div>
+
+
+                <!-- NOTIFICATION DROPDOWN -->
+
+                <div id="notificationDropdown" class="notification-dropdown">
+
+                    <div class="notification-header">
+                        <strong>Notifications</strong>
+                        <span id="notificationTitleCount">0</span>
+                    </div>
+
+                    <div id="notificationList">
+                        <div class="no-notification">
+                            No new notifications.
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <h2 id="dashboardTop">📊 RevPilot Dashboard</h2>
+
+
+        <h3 id="welcome">
+            Please login first
+        </h3>
+
+        
+
+        <!-- QUICK ACTIONS -->
+        <div class="quick-actions">
+
+            <div class="quick-action">
+                <div class="quick-icon">🤖</div>
+                <div>
+                    <h4>Generate AI Reply</h4>
+                    <p>Create an AI-powered customer reply</p>
+                </div>
+                <button onclick="document.getElementById('business').focus()">
+                    Generate
+                </button>
+            </div>
+
+    <div class="quick-action">
+        <div class="quick-icon">👥</div>
+        <div>
+            <h4>View Leads</h4>
+            <p>Manage your saved customer leads</p>
+        </div>
+        <button onclick="document.getElementById('dashboardLeads').scrollIntoView({behavior:'smooth'})">
+            View
+        </button>
+    </div>
+
+    <div class="quick-action">
+        <div class="quick-icon">⏰</div>
+        <div>
+            <h4>Follow-ups</h4>
+            <p>Check customers that need follow-up</p>
+        </div>
+        <button onclick="document.getElementById('dueFollowups').scrollIntoView({behavior:'smooth'})">
+            Check
+        </button>
+    </div>
+
+    <div class="quick-action">
+        <div class="quick-icon">💰</div>
+        <div>
+            <h4>Revenue</h4>
+            <p>Track your generated revenue</p>
+        </div>
+        <button onclick="document.getElementById('revenueChart').scrollIntoView({behavior:'smooth'})">
+            Analytics
+        </button>
+    </div>
+
+</div>
+
+        <!-- ==================== STATS ==================== -->
+
+        <div class="stats">
+
+
+            <div class="card">
+
+                <h3>Total Leads</h3>
+
+                <p id="totalLeads">
+                    0
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>🔥 Hot Leads</h3>
+
+                <p id="hotLeads">
+                    0
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>🟡 Warm Leads</h3>
+
+                <p id="warmLeads">
+                    0
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>⚪ Cold Leads</h3>
+
+                <p id="coldLeads">
+                    0
+                </p>
+
+            </div>
+            
+            <div class="card">
+    <h3>💰 Total Revenue</h3>
+    <p id="totalRevenue">0</p>
+</div>
+
+<div class="card">
+    <h3>✅ Converted Leads</h3>
+    <p id="convertedLeads">0</p>
+</div>
+
+<div class="card">
+    <h3>📈 Conversion Rate</h3>
+    <p id="conversionRate">0%</p>
+</div>
+
+<div class="card">
+    <h3>💵 Avg Revenue / Customer</h3>
+    <p id="avgRevenue">0</p>
+</div>
+
+<div class="card">
+    <h3>📅 Today's Revenue</h3>
+    <p id="todayRevenue">0</p>
+</div>
+
+
+</div>
+
+<!-- ==================== REVENUE OVERVIEW ==================== -->
+
+<h3 id="revenueSection">
+    📊 Revenue Overview
+</h3>
+
+<div id="revenueChart">
+    Loading revenue chart...
+</div>
+
+
+<hr>
+
+
+<!-- ==================== CONVERSION FUNNEL ==================== -->
+
+<h3>
+    📈 Conversion Funnel
+</h3>
+
+<div id="conversionFunnel">
+    Loading conversion funnel...
+</div>
+
+
+
+        <!-- ==================== LEAD MANAGEMENT ==================== -->
+
+        <h3 id="leadSection">
+            Lead Management
+        </h3>
+        
+        <div class="lead-controls">
+
+    <input
+        type="text"
+        id="searchLead"
+        placeholder="🔎 Search customer or business..."
+        onkeyup="filterLeads()"
+    >
+
+    <select
+        id="filterStatus"
+        onchange="filterLeads()"
+    >
+        <option value="All">All Leads</option>
+        <option value="HOT">🔥 Hot</option>
+        <option value="WARM">🟡 Warm</option>
+        <option value="COLD">⚪ Cold</option>
+    </select>
+
+    <select
+        id="sortLeads"
+        onchange="filterLeads()"
+    >
+        <option value="newest">Newest First</option>
+        <option value="oldest">Oldest First</option>
+        <option value="highRevenue">Highest Revenue</option>
+        <option value="lowRevenue">Lowest Revenue</option>
+    </select>
+
+</div>
+
+        
+        <h3 id="followupSection">⏰ Due Follow-ups</h3>
+
+        <div id="dueFollowups">
+            No follow-ups due.
+        </div>
+
+        <!-- ==================== RECENT LEADS ==================== -->
+
+        <h3>
+            Recent Leads
+        </h3>
+
+        <div id="leadCount">
+            0 leads
+        </div>
+
+        <div id="dashboardLeads">
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    👥
+                </div>
+
+                <h3>
+                    No leads yet
+                </h3>
+
+                <p>
+                    Start generating AI replies to create your first customer lead.
+                </p>
+
+                <button onclick="document.getElementById('business').focus()">
+                    🤖 Generate Your First Reply
+                </button>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ==================== LEAD DETAILS MODAL ==================== -->
+
+    <div
+        id="leadModal"
+        class="modal"
+    >
+
+
+        <div class="modal-content">
+
+
+            <span
+                class="close"
+                onclick="closeLeadModal()"
+            >
+                &times;
+            </span>
+
+
+            <h2>
+                Lead Details
+            </h2>
+
+
+            <div id="modalContent">
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ==================== AI GENERATOR ==================== -->
+
+    <div class="container">
+
+
+        <h1>
+            RevPilot AI
+        </h1>
+
+
+        <p>
+            AI Revenue Follow-up System
+        </p>
+
+
+
+        <!-- Business Name -->
+
+        <label>
+            Business Name
+        </label>
+
+
+        <input
+            type="text"
+            id="business"
+            placeholder="Enter business name"
+        >
+
+
+
+        <!-- Customer Message -->
+
+        <label>
+            Customer Message
+        </label>
+
+
+        <textarea
+            id="message"
+            placeholder="Enter customer message"
+        ></textarea>
+
+
+
+        <!-- Generate -->
+
+        <button onclick="generateReply()">
+            Generate AI Reply
+        </button>
+
+
+
+        <!-- AI Reply -->
+
+        <h3>
+            AI Reply
+        </h3>
+
+
+        <div id="output">
+
+            Your AI reply will appear here...
+
+        </div>
+
+
+
+        <!-- Lead Information -->
+
+        <h3>
+            Lead Information
+        </h3>
+
+
+        <div id="leadInfo">
+
+            No lead information yet.
+
+        </div>
+
+
+
+        <!-- Lead Status -->
+
+        <h3>
+            Lead Status
+        </h3>
+
+
+        <select id="status">
+
+            <option value="Cold">
+                Cold
+            </option>
+
+            <option value="Warm">
+                Warm
+            </option>
+
+            <option value="Hot">
+                Hot
+            </option>
+
+        </select>
+
+
+
+        <!-- Save Lead -->
+
+        <button onclick="saveLead()">
+            💾 Save Lead
+        </button>
+
+
+
+        <!-- Old Saved Leads -->
+
+        <button onclick="showLeads()">
+            📋 View Saved Leads
+        </button>
+
+
+        <div id="savedLeads">
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+
+    <script src="script.js"></script>
+
+
+</body>
+
+</html>
