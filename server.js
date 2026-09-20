@@ -1,6 +1,9 @@
 const express = require("express");
 const OpenAI = require("openai");
 require("dotenv").config();
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY
+});
 const Database = require("better-sqlite3");
 const bcrypt = require("bcryptjs");
 const session = require("express-session");
