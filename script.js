@@ -953,7 +953,13 @@ function displayLeads(leads) {
                     </h3>
 
                     <span class="status status-${status.toLowerCase()}">
-                        ${status}
+                        ${
+                            status === "HOT"
+                                ? "🔥 HOT"
+                                : status === "WARM"
+                                ? "🟡 WARM"
+                                : "⚪ COLD"
+                        }
                     </span>
 
                 </div>
